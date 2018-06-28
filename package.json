@@ -1,0 +1,30 @@
+{
+  "name": "botkit-mixpanel",
+  "version": "0.0.3",
+  "description": "a client for botkit studio's enhanced analytics capabilities",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shishirsharma/botkit-mixpanel.git"
+  },
+  "keywords": [
+    "botkit",
+    "analytics",
+    "bots",
+    "metrics",
+    "mixpanel",
+    "crm"
+  ],
+  "author": "shishirsharma.in@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/shishirsharma/botkit-mixpanel/issues"
+  },
+  "homepage": "https://github.com/shishirsharma/botkit-mixpanel#readme",
+  "dependencies": {
+    "mixpanel": "^0.9.2"
+  }
+}
