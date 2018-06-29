@@ -188,7 +188,7 @@ module.exports = function(controller, options) {
     user: function(bot, message) {
 
       let that = this;
-
+      let promises = [];
 
       if (!bot.getMessageUserMixpanel) {
         if (debug) {
@@ -226,7 +226,26 @@ module.exports = function(controller, options) {
         };
       }
 
-      bot.getMessageUserMixpanel(message).then(function(options) {
+      if (bot.getInstanceInfo) {
+        promises.push(bot.getInstanceInfo());
+        //   .then(function(instance) {
+        //   payload.team_name = instance.team.name;
+        //   payload.team_url = instance.team.url;
+        //   payload.team_id = instance.team.id;
+        // }).catch(function(err) {
+        //   if (err) {
+        //     if (debug) console.error('Error in bot instance metrics API: ', err);
+        //   }
+        // });
+      }
+
+      if (bot.getMessageUserMixpanel) {
+        promises.push(bot.getMessageUserMixpanel(message));
+      }
+      Promise.all(promises).then(function(values) {
+        let instance = values[0];
+        let options = values[1];
+
         let profile = options.profile;
         let identity = options.identity;
         let payload = {
@@ -239,6 +258,8 @@ module.exports = function(controller, options) {
           instance_uid: bot.identity.id,
           user_id: profile.id,
           team_id: identity.user.team_id,
+          team_name: instance.team.name || 'unknown',
+          team_url: instance.team.url || 'unknown',
           is_admin: identity.user.is_admin,
           is_owner: identity.user.is_owner,
           is_primary_owner: identity.user.is_primary_owner,
